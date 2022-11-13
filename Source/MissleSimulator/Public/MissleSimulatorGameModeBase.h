@@ -11,5 +11,6 @@ UCLASS()
 class MISSLESIMULATOR_API AMissleSimulatorGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
-	
+public:
+	AMissleSimulatorGameModeBase();
 };

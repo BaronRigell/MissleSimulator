@@ -13,5 +13,8 @@ UCLASS()
 class MISSLESIMULATOR_API AMSPlayerController : public APlayerController
 {
 	GENERATED_BODY()
+
+protected:
+	virtual void BeginPlay() override;
 	
 };

@@ -3,3 +3,10 @@
 
 #include "Player/MSPlayerController.h"
 
+void AMSPlayerController::BeginPlay()
+{
+	Super::BeginPlay();
+
+	SetInputMode(FInputModeUIOnly());
+	SetShowMouseCursor(true);
+}

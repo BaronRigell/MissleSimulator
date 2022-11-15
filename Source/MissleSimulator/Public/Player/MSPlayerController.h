@@ -16,5 +16,7 @@ class MISSLESIMULATOR_API AMSPlayerController : public APlayerController
 
 protected:
 	virtual void BeginPlay() override;
-	
+public:
+	void LockMovement();
+	void ToggleInput(bool bInputNew);
 };

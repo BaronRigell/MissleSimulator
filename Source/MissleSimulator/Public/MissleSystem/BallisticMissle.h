@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "GameFramework/ProjectileMovementComponent.h"
 #include "BallisticMissle.generated.h"
 
 UCLASS()
@@ -15,9 +16,19 @@ public:
 	ABallisticMissle();
 
 protected:
-	// Called when the game starts or when spawned
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+	USkeletalMeshComponent* RocketMesh;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+	UProjectileMovementComponent* RocketMovement;
+	
 	virtual void BeginPlay() override;
-
+	virtual void PostInitializeComponents() override;
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 public:	
-
+	USkeletalMeshComponent* GetMesh() const { return RocketMesh;}
+private:
+	UFUNCTION()
+	void OnGroundHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
 };

@@ -26,6 +26,8 @@ protected:
 	virtual void BeginPlay() override;
 	virtual void PostInitializeComponents() override;
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+	
+	virtual void Tick(float DeltaSeconds) override;
 public:	
 	USkeletalMeshComponent* GetMesh() const { return RocketMesh;}
 private:

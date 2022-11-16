@@ -20,6 +20,7 @@ protected:
 	
 	virtual void BeginPlay() override;
 	virtual void PostInitializeComponents() override;
+	UFUNCTION()
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 public:	
 

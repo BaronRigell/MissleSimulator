@@ -3,9 +3,11 @@
 
 #include "MissleSimulator/Public/MissleSystem/BallisticMissle.h"
 
+#include "Kismet/KismetMathLibrary.h"
+
 ABallisticMissle::ABallisticMissle()
 {
-	PrimaryActorTick.bCanEverTick = false;
+	PrimaryActorTick.bCanEverTick = true;
 
 	RocketMesh = CreateDefaultSubobject<USkeletalMeshComponent>("RoocketMesh");
 	RootComponent = RocketMesh;
@@ -32,6 +34,16 @@ void ABallisticMissle::EndPlay(const EEndPlayReason::Type EndPlayReason)
 	RocketMesh->OnComponentHit.RemoveDynamic(this, &ABallisticMissle::OnGroundHit);
 
 	Super::EndPlay(EndPlayReason);
+}
+
+void ABallisticMissle::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+	FRotator NewRotation;
+	auto Vel = GetMesh()->GetPhysicsLinearVelocity();
+	UKismetMathLibrary::Vector_Normalize(Vel);
+	/*NewRotation.Pitch = FMath::ClampAngle( ,0.f,90.f);*/
+	SetActorRotation(Vel.Rotation());
 }
 
 void ABallisticMissle::OnGroundHit(UPrimitiveComponent* HitComponent, AActor* OtherActor,

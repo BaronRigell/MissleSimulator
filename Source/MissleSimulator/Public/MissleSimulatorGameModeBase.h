@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "BallisticMissle.h"
+#include "TrajectoryActor.h"
 #include "GameFramework/GameModeBase.h"
 #include "MissleSimulatorGameModeBase.generated.h"
 
@@ -19,7 +20,17 @@ protected:
 	TWeakObjectPtr<ABallisticMissle> Missile;
 	void SetupTrajectory(TArray<FVector>& Locations);
 	void SetupLandingZone(FVector& LandingLocation);
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<ATrajectoryActor> TrajectoryActorClass;
+
+	UFUNCTION(BlueprintCallable)
+	void ClearSimulation();
 public:
 	UFUNCTION(BlueprintCallable)
 	void SimulateFromParams(FVector StartCoordinates, float Angle, float Height, float Velocity);
+
+private:
+	UPROPERTY()
+	TArray<ATrajectoryActor*> PointActors;
 };

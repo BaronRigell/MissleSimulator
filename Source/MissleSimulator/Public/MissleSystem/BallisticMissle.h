@@ -35,6 +35,7 @@ protected:
 public:	
 	USkeletalMeshComponent* GetMesh() const { return RocketMesh;}
 	USphereComponent* GetSphere() const {return Sphere;}
+	UProjectileMovementComponent* GetMovement() const {return RocketMovement;}
 private:
 	UFUNCTION()
 	void OnGroundHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);

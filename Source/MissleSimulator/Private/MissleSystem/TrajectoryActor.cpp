@@ -35,5 +35,10 @@ void ATrajectoryActor::EndPlay(const EEndPlayReason::Type EndPlayReason)
 void ATrajectoryActor::OnEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
                                     UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
-	if (OtherActor->IsA<ABallisticMissle>()) Destroy();
+	//UE_LOG(LogTemp, Warning, TEXT("%s registered"), *(this->GetName()))
+	if (Cast<ABallisticMissle>(OtherActor))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("%s is going to die"), *(this->GetName()))
+		Destroy();
+	}
 }

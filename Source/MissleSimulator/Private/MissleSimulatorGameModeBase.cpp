@@ -29,7 +29,7 @@ void AMissleSimulatorGameModeBase::SetupLandingZone(FVector& LandingLocation)
 
 void AMissleSimulatorGameModeBase::ClearSimulation()
 {
-	Missile->Destroy();
+	if (IsValid(Missile.Get())) Missile->Destroy();
 	for (const auto PointActor : PointActors)
 	{
 		if (IsValid(PointActor)) PointActor->Destroy();
@@ -43,11 +43,14 @@ void AMissleSimulatorGameModeBase::SimulateFromParams(FVector StartCoordinates, 
 	Height*=100.f;
 	FActorSpawnParameters ActorSpawnParameters;
 	ActorSpawnParameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-
-	 
+	float XCoord=FMath::Abs(Velocity*UKismetMathLibrary::DegCos(Angle)*((Velocity*UKismetMathLibrary::DegSin(Angle)-FMath::Sqrt(
+		FMath::Square(Velocity*UKismetMathLibrary::DegSin(Angle)))+2*Height*9.8f)/9.8f));
+	XCoord+=StartCoordinates.X;
+	 Missile = GetWorld()->SpawnActor<ABallisticMissle>(BallisticMissileClass, FVector(200.f,StartCoordinates.Y, Height),
+	 	FRotator(Angle, 0.f, 0.f), ActorSpawnParameters);
 
 	//Исправить локацию спавна ракеты
-	FVector CurrentVelocity(FMath::Cos(Angle)*Velocity, 0.f, FMath::Sin(Angle)*Velocity);
+	FVector CurrentVelocity(UKismetMathLibrary::DegCos(Angle)*Velocity, 0.f, UKismetMathLibrary::DegSin(Angle)*Velocity);
 
 	UE_LOG(LogTemp, Error, TEXT("%f, %f, %f - missle velocity"), CurrentVelocity.X, CurrentVelocity.Y, CurrentVelocity.Z);
 	
@@ -60,7 +63,7 @@ void AMissleSimulatorGameModeBase::SimulateFromParams(FVector StartCoordinates, 
 	UGameplayStatics::Blueprint_PredictProjectilePath_ByTraceChannel(GetWorld(), HitResult, PointLocations,
 		LastTraceDest, Missile->GetActorLocation(), CurrentVelocity, true,
 		10.f, ECollisionChannel::ECC_Visibility, true, TArray<AActor*>{Missile.Get()},
-		EDrawDebugTrace::Persistent, 10.f, 10.f, 5.f);
+		EDrawDebugTrace::ForOneFrame, 10.f, 10.f, 5.f);
 
 	SetupTrajectory(PointLocations);
 	SetupLandingZone(HitResult.Location);

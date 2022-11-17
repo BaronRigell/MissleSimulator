@@ -43,10 +43,6 @@ void ABallisticMissle::EndPlay(const EEndPlayReason::Type EndPlayReason)
 void ABallisticMissle::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
-	/*FRotator NewRotation;
-	auto Vel = Sphere->GetPhysicsLinearVelocity();
-	UKismetMathLibrary::Vector_Normalize(Vel);
-	SetActorRotation(Vel.Rotation());*/
 }
 
 void ABallisticMissle::OnGroundHit(UPrimitiveComponent* HitComponent, AActor* OtherActor,

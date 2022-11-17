@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Components/SphereComponent.h"
 #include "GameFramework/Actor.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "BallisticMissle.generated.h"
@@ -22,6 +23,9 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
 	UProjectileMovementComponent* RocketMovement;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+	USphereComponent* Sphere;
 	
 	virtual void BeginPlay() override;
 	virtual void PostInitializeComponents() override;
@@ -30,6 +34,7 @@ protected:
 	virtual void Tick(float DeltaSeconds) override;
 public:	
 	USkeletalMeshComponent* GetMesh() const { return RocketMesh;}
+	USphereComponent* GetSphere() const {return Sphere;}
 private:
 	UFUNCTION()
 	void OnGroundHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);

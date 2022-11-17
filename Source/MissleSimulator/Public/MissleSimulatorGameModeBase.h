@@ -23,6 +23,9 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<ATrajectoryActor> TrajectoryActorClass;
+	
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<ABallisticMissle> BallisticMissileClass;
 
 	UFUNCTION(BlueprintCallable)
 	void ClearSimulation();
